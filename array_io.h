@@ -8,7 +8,6 @@
 
 
 typedef enum {INTEGER, DECIMAL, WORD} type;
-typedef enum {OUTSIDE_WORD, INSIDE_WORD} state;
 
 // Struct to hold sortable element
 typedef struct {

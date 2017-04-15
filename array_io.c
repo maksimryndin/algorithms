@@ -2,11 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <assert.h>
 
 #include "utils.h"
 #include "array_io.h"
 
 
+typedef enum {OUTSIDE_WORD, INSIDE_WORD} state;
 
 
 state handle_outside_word(int c, element *elem_ptr, 
@@ -49,25 +51,23 @@ int read_input(element buffer[]){
   int c;
   
   int buffer_counter = 0;
-  int *counter_ptr = &buffer_counter;
   
   element temporary_element;
-  element *elem_ptr = &temporary_element;
   
   int word_index = 0;
-  int *word_index_ptr = &word_index;
   
   state state = OUTSIDE_WORD;
   
   while ((c = getchar()) != EOF)
     switch (state){
       case OUTSIDE_WORD:
-	state = handle_outside_word(c, elem_ptr, word_index_ptr);
+	state = handle_outside_word(c, &temporary_element, &word_index);
 	break;
       case INSIDE_WORD:
-	state = handle_inside_word(c, elem_ptr, word_index_ptr, 
-				   buffer, counter_ptr);
+	state = handle_inside_word(c, &temporary_element, &word_index, 
+				   buffer, &buffer_counter);
 	break;
+      default: assert(0);       /* Never should get here */
     }
   return buffer_counter;
 }

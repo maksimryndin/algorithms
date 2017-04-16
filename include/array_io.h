@@ -9,8 +9,8 @@
 
 typedef enum {INTEGER, DECIMAL, WORD} type;
 
-// Struct to hold sortable element
-typedef struct {
+/* Struct to hold sortable element */
+typedef struct _element {
   char word[WORD_SIZE];
   int integer;
   double decimal;
@@ -20,5 +20,7 @@ typedef struct {
 
 void print_array(element buffer[], int size);
 int read_input(element buffer[]);
+void swap_elements(element *a, element *b);
+
 
 #endif /* ARRAY_IO_H */

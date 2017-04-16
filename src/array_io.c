@@ -116,9 +116,9 @@ state handle_inside_word(int c, element *elem_ptr, int *word_index_ptr,
     #ifdef DEBUG
       printf("[DEBUG] %s is %s\n", STRINGIFY(elem_ptr->word), elem_ptr->word);
     #endif
-    // Push copied and prepared element to the buffer
+    /* Push copied and prepared element to the buffer */
     copy_element_to_buffer(buffer, *counter_ptr, elem_ptr); 
-    // Reset word index
+    /* Reset word index */
     *word_index_ptr = 0;
     (*counter_ptr)++;
   }
@@ -139,4 +139,13 @@ void copy_element_to_buffer(element buffer[], int buffer_index, element *elem_pt
       break;
   }
   buffer[buffer_index].type = elem_ptr->type;
-} 
+}
+
+void swap_elements(element *a, element *b){
+  assert(sizeof(*a) == sizeof(*b));
+  element tmp;
+  tmp = *a;
+  *a = *b;
+  *b = tmp;
+}
+

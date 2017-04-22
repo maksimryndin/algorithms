@@ -1,0 +1,4 @@
+#1 fix make debug
+#2 add float support
+#3 array size command-line option to specify at run-time
+#4 Fix all compiler warnings

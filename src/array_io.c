@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
 #include <assert.h>
@@ -18,7 +19,7 @@ state handle_inside_word(int c, element *elem_ptr, int *word_index_ptr,
 void copy_element_to_buffer(element buffer[], int buffer_index, element *elem_ptr);
 
 
-void print_array(element buffer[], int size){
+void print_array(element buffer[], int size, char *delimiter){
   /*
     Print element values according to their type to stdout.	
   */
@@ -36,7 +37,7 @@ void print_array(element buffer[], int size){
 	printf("%s", buffer[i].word);
 	break;
     }
-    printf("\n");
+    printf("%s", delimiter);
   }
 }
 
@@ -147,5 +148,53 @@ void swap_elements(element *a, element *b){
   tmp = *a;
   *a = *b;
   *b = tmp;
+}
+
+bool compare_elements(element *a, element *b){
+  /* Comparison function.
+   * Return TRUE if first argument is
+   * less than the second one, and FALSE otherwise.
+   * WORD is considered greater than INTEGER and DECIMAL
+  */
+
+    switch(a->type){
+      case INTEGER:
+	  switch(b->type){
+	      case INTEGER:
+		return (a->integer > b->integer) ? false : true;
+		break;
+	      case DECIMAL:
+		return (a->integer > b->decimal) ? false : true;
+		break;
+	      case WORD:
+		return true;
+		break;
+	  }
+          break;
+      case DECIMAL:
+	  switch(b->type){
+	      case INTEGER:
+		return (a->decimal > b->integer) ? false : true;
+		break;
+	      case DECIMAL:
+		return (a->decimal > b->decimal) ? false : true;
+		break;
+	      case WORD:
+		return true;
+		break;
+	  }
+          break;
+      case WORD:
+          switch(b->type){
+	      case INTEGER:
+	      case DECIMAL:
+		return false;
+		break;
+	      case WORD:
+		return (strcmp(a->word, b->word) > 0) ? false : true;
+		break;
+	  }
+          break;
+   }
 }
 

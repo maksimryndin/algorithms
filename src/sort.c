@@ -9,8 +9,7 @@
 #include "array_io.h"
 
 
-bool compare_elements(element *, element *);
-void sort(element buffer, int size);
+void sort(element buffer[], int size);
 
 
 int main(int argc, char *argv[]){
@@ -36,23 +35,26 @@ int main(int argc, char *argv[]){
   element *buffer = (element *) ec_malloc(MAXSIZE * sizeof(element));
   memset(buffer, '\0', sizeof(buffer));
   size = read_input(buffer);
-  print_array(buffer, size);
+  sort(buffer, size);
+  printf("\nSorted array:\n");
+  print_array(buffer, size, " ");
+  printf("\n");
   free(buffer);
   return 0;
 }
 
 
-void sort(element buffer, int size){
-  
-}
-
-
-/* Use strcmp for char arrays */
-bool compare_elements(element *a, element *b){
-  /* Comparison function.
-   * Return TRUE if first argument is 
-   * greater than the second one, and FALSE otherwise.
-  */
-  
+void sort(element buffer[], int size){
+  /* Insertion sort */
+  int i, j;
+  for (i = 1; i < size; i++){
+	print_array(buffer, size, " ");
+	printf("\n");
+	for (j = 0; j < i; j++) {
+		if (!compare_elements(&buffer[j], &buffer[i])){
+			swap_elements(&buffer[i], &buffer[j]);
+		}
+	}
+  }
 }
 
